@@ -1,6 +1,7 @@
 ## HTTP CLIENT CHEAT SHEET
 
-this personal cheatsheet
+this personal cheatsheet for me 
+author [nagara](https://github.com/naagaraa)
 
 ### Available HTTP Methods
 
