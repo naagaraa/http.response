@@ -205,25 +205,58 @@ namespace App\Http\Controllers;
 use App\Model\Posts;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends Controller
 {
-    //
     public function index()
     {
-        $blog = new Posts;
-        return json_encode($blog->all());
+
+        try {
+            $blog = new Posts;
+            $response = [
+                "message" => "blog post",
+                "status" => 200,
+                "data" => $blog->all()
+            ];
+            return response()->json($response, Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            $response = [
+                "message" => "blog post not found",
+                "status" => 404,
+                "data" => $blog->all()
+            ];
+            return response()->json($response, Response::HTTP_NOT_FOUND);
+        }
     }
 
     public function store(Request $request)
     {
-        $blog = new Posts;
-        $blog->title = $request->title;
-        $blog->slug = Str::slug($request->title, "-");
-        $blog->author = $request->author;
-        $blog->content = $request->content;
-        $blog->save();
-        return response('sukses', 201);
+
+
+        try {
+            $blog = new Posts;
+            $blog->title = $request->title;
+            $blog->slug = Str::slug($request->title, "-");
+            $blog->author = $request->author;
+            $blog->content = $request->content;
+            $blog->save();
+
+            $response = [
+                "message" => "blog post create",
+                "status" => 201,
+                "data" => $blog->all()
+            ];
+            return response()->json($response, Response::HTTP_CREATED);
+        } catch (\Throwable $th) {
+            $blog = new Posts;
+            $response = [
+                "message" => "blog post",
+                "status" => 400,
+                "data" => $blog->all()
+            ];
+            return response()->json($response, Response::HTTP_BAD_REQUEST);
+        }
     }
 
     public function update(Request $request)
@@ -237,10 +270,20 @@ class PostController extends Controller
             $blog->content = $request->content;
             $blog->save();
 
-            return json_encode($blog);
+            $response = [
+                "message" => "blog post update",
+                "status" => 200,
+                "data" => $blog->all()
+            ];
+            return response()->json($response, Response::HTTP_OK);
         } catch (\Throwable $th) {
             // throw $th;
-            return json_encode("data tidak ada");
+            $response = [
+                "message" => "blog post not found",
+                "status" => 404,
+                "data" => $blog->all()
+            ];
+            return response()->json($response, Response::HTTP_NOT_FOUND);
         }
     }
 
@@ -250,13 +293,24 @@ class PostController extends Controller
             $blog = Posts::findOrFail($request->id);
             $blog->delete();
 
-            return json_encode("sukses delete");
+            $response = [
+                "message" => "blog post delete",
+                "status" => 200,
+                "data" => $blog->all()
+            ];
+            return response()->json($response, Response::HTTP_OK);
         } catch (\Throwable $th) {
-            // throw $th;
-            return json_encode("data tidak ada");
+            $blog = new Posts;
+            $response = [
+                "message" => "blog post",
+                "status" => 404,
+                "data" => $blog->all()
+            ];
+            return response()->json($response, Response::HTTP_NOT_FOUND);
         }
     }
 }
+
 
 ```
 
