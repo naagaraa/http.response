@@ -320,13 +320,37 @@ class PostController extends Controller
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/v1/posts/query', 'PostController@show');
-Route::post('/v1/posts/search', 'PostController@search');
+// http://127.0.0.1:8000/api/v1/posts/filter?page=5&size=10
+Route::get('/v1/posts/query', [
+    'as' => 'post.query',
+    'uses' => 'PostController@show'
+]);
 
-Route::get('/v1/posts/all', 'PostController@index');
-Route::post('/v1/posts/store', 'PostController@store');
-Route::put('/v1/posts/update', 'PostController@update');
-Route::delete('/v1/posts/delete', 'PostController@destroy');
+Route::post('/v1/posts/search', [
+    'as' => 'post.search',
+    'uses' => 'PostController@search'
+]);
+
+Route::get('/v1/posts/all', [
+    'as' => 'post.all',
+    'uses' => 'PostController@index'
+]);
+
+Route::post('/v1/posts/store', [
+    'as' => 'post.store',
+    'uses' => 'PostController@store'
+]);
+
+Route::put('/v1/posts/update', [
+    'as' => 'post.update',
+    'uses' => 'PostController@update'
+]);
+
+Route::delete('/v1/posts/delete', [
+    'as' => 'post.delete',
+    'uses' => 'PostController@destroy'
+]);
+
 ```
 
 ## Example NODEJS
