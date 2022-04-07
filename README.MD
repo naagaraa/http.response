@@ -1,6 +1,6 @@
 ## HTTP CLIENT CHEAT SHEET
 
-this personal cheatsheet for me 
+this personal cheatsheet for me
 author [nagara](https://github.com/naagaraa)
 
 ### Available HTTP Methods
@@ -195,6 +195,8 @@ Accept: application/json
 
 ## Example Laravel for rest
 
+here is example controller for laravel making api, it's very very basic. it's not recommend but it's can be reference for basic makes restfull api
+
 ### controller
 
 ```php
@@ -315,6 +317,8 @@ class PostController extends Controller
 ```
 
 ### route
+
+here is example api route for laravel making api, it's very very basic. it's not recommend but it's can be reference for basic makes restfull api
 
 ```php
 use Illuminate\Http\Request;
